@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using ToDoApp.Wpf.Models;
 namespace ToDoApp.Wpf
 {
     /// <summary>
@@ -26,7 +26,10 @@ namespace ToDoApp.Wpf
         }
         private void  OnTodoTaskButtonClick(object sender, RoutedEventArgs e)
         {
-            TodoTaskListView.Items.Add(TodoTaskNameText.Text);
+            TodoTask item = new TodoTask();
+            item.Description = TodoTaskNameText.Text;
+            TodoTaskListView.Items.Add(item);
+
         }
     }
 }

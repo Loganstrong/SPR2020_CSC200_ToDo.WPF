@@ -3,31 +3,67 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="clr-namespace:ToDoApp.Wpf.Models"
         xmlns:local="clr-namespace:ToDoApp.Wpf"
+        Title="CSC200 To Do Task App"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="303"></ColumnDefinition>
-            <ColumnDefinition Width="97"></ColumnDefinition>
+            <ColumnDefinition Width="303"/>
+            <ColumnDefinition Width="97"/>
         </Grid.ColumnDefinitions>
         <TextBox 
             x:Name="TodoTaskNameText" 
-            Grid.Row="0" />
+            Grid.Row="0" 
+            Grid.Column="0"
+            Margin="2"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
+            BorderBrush="DarkGray"
+            BorderThickness="1"
+            FontSize="18"
+            Text="Sample Task" />
+
         <Button 
             x:Name="AddTodoTaskButton" 
             Grid.Row="0" 
             Grid.Column="1"
-            Content="Add" Click="OnTodoTaskButtonClick" 
-             />
+            Margin="2"
+            Padding="10"
+            Click="OnTodoTaskButtonClick"
+            Content="Add"/>
         <ListView 
             x:Name="TodoTaskListView" 
             Grid.Row="1"
             Grid.Column="0" 
-            Grid.ColumnSpan="2"/>
+            Grid.ColumnSpan="2"
+            BorderBrush="DarkGray"
+            BorderThickness="1" >
+
+            <ListView.ItemTemplate>
+            <DataTemplate DataType="models:TodoTask">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"  />
+                    </Grid.RowDefinitions>
+                    <StackPanel
+                        Grid.Column="0"
+                        HorizontalAlignment="Stretch"
+                        Orientation="Horizontal">
+                        <!-- todo add checkbox for IsCompleted indicator -->
+                            <TextBox x:Name="TodoTaskItemNameText" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"  />
+                        </StackPanel>
+                </Grid>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
     </Grid>
+
 </Window>
