@@ -31,5 +31,27 @@ namespace ToDoApp.Wpf
             TodoTaskListView.Items.Add(item);
 
         }
+        private void OnRemoveTodoTaskButtonClick(object sender, RoutedEventArgs e)
+        {
+            //selected index to remove cannot be less than 0 or greater than item count
+            int index = TodoTaskListView.SelectedIndex;
+            if(index >= 0  && index < TodoTaskListView.Items.Count)
+            TodoTaskListView.Items.RemoveAt(TodoTaskListView.SelectedIndex);
+            
+
+        }
+
+        private void OnTodoTaskListViewSelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+            int index = TodoTaskListView.SelectedIndex;
+            bool enabled = (index >= 0 && index < TodoTaskListView.Items.Count);
+            RemoveTodoTaskButton.IsEnabled = enabled;
+        }
+
+        private bool CanRemoveTodoTask(int selectedIndex)
+        {
+            //
+        }
+        
     }
 }
