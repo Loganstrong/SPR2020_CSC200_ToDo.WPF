@@ -23,6 +23,7 @@ namespace ToDoApp.Wpf
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new ViewModels.MainWindowViewModel();
         }
         private void  OnTodoTaskButtonClick(object sender, RoutedEventArgs e)
         {
@@ -47,11 +48,11 @@ namespace ToDoApp.Wpf
             bool enabled = (index >= 0 && index < TodoTaskListView.Items.Count);
             RemoveTodoTaskButton.IsEnabled = enabled;
         }
-
         private bool CanRemoveTodoTask(int selectedIndex)
         {
-            //
+            return (selectedIndex >= 0 && selectedIndex < TodoTaskListView.Items.Count);
         }
+        
         
     }
 }
