@@ -27,8 +27,9 @@ namespace ToDoApp.Wpf
         }
         private void  OnTodoTaskButtonClick(object sender, RoutedEventArgs e)
         {
+            string line =  TodoTaskNameText.Text;
             TodoTask item = new TodoTask();
-            item.Description = TodoTaskNameText.Text;
+            item.Description = line;
             TodoTaskListView.Items.Add(item);
 
         }
@@ -52,7 +53,83 @@ namespace ToDoApp.Wpf
         {
             return (selectedIndex >= 0 && selectedIndex < TodoTaskListView.Items.Count);
         }
-        
-        
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            string path = "task.txt";
+            
+            {
+                
+                
+                    System.IO.FileStream fileStream = System.IO.File.Open(
+                    path,
+                    System.IO.FileMode.Append,
+                    System.IO.FileAccess.Write,
+                    System.IO.FileShare.None);
+                    System.IO.StreamWriter writer = new System.IO.StreamWriter(fileStream);
+
+                    foreach(var item in TodoTaskListView.Items)
+                    {
+                        TodoTask iTem = item as TodoTask;
+                        writer.WriteLine(iTem.Description);
+                    }
+
+                    writer.Close();
+                    fileStream.Close();
+                
+                
+            }
+        }
+
+        private void Load_Click(object sender, RoutedEventArgs e)
+        {
+            string path = "task.txt";
+
+            if (System.IO.File.Exists(path))
+            {
+                
+                
+                    System.IO.FileStream fileStream = System.IO.File.Open(
+                    path,
+                    System.IO.FileMode.Open,
+                    System.IO.FileAccess.Read,
+                    System.IO.FileShare.None);
+                    System.IO.StreamReader reader = new System.IO.StreamReader(fileStream);
+                    
+
+                while (reader.EndOfStream == false)
+                {
+                    string line = reader.ReadLine();
+                    TodoTask item = new TodoTask();
+                    item.Description = line;
+                    this.TodoTaskListView.Items.Add(item);
+                    
+                }
+
+                
+
+                fileStream.Close();
+                    reader.Close();
+            }
+            else
+            {
+                Console.WriteLine("File not found!");
+            }
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TodoTaskNameText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
