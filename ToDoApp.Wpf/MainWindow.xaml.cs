@@ -25,6 +25,8 @@ namespace ToDoApp.Wpf
             InitializeComponent();
             DataContext = new ViewModels.MainWindowViewModel();
         }
+
+        private const string DefaultFilePath = "text.txt";
         private void  OnTodoTaskButtonClick(object sender, RoutedEventArgs e)
         {
             string line =  TodoTaskNameText.Text;
@@ -60,7 +62,7 @@ namespace ToDoApp.Wpf
             
             {
                 
-                
+                    
                     System.IO.FileStream fileStream = System.IO.File.Open(
                     path,
                     System.IO.FileMode.Append,
@@ -130,6 +132,38 @@ namespace ToDoApp.Wpf
         private void TodoTaskNameText_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+        private void OnMenuFileSaveMenuCLicked(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
+            bool? dialogResult = dialog.ShowDialog();
+            if (dialogResult == true)
+            {
+                string filePath = dialog.FileName;
+
+                if (System.IO.File.Exists(DefaultFilePath))
+                {
+                    MessageBoxResult userSelected;
+                    userSelected = System.Windows.MessageBox.Show(
+                        messageBoxText: "Overwrite file?",
+                        caption: "Confirm", MessageBoxButton.YesNo);
+
+                    if (userSelected == MessageBoxResult.Yes)
+                    {
+                        System.IO.File.Delete(DefaultFilePath);
+                    }
+                }
+            }
+        }
+
+
+
+        private void OnMainHelpAboutMenuClicked(object sender, RoutedEventArgs e)
+        {
+            System.Windows.MessageBox.Show(messageBoxText: "Simple Notepad",
+                caption: "About",
+                MessageBoxButton.OK,
+                icon: MessageBoxImage.Information);
         }
     }
 }

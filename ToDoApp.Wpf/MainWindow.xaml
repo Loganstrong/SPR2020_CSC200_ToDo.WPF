@@ -28,6 +28,7 @@
             FontFamily="Arial"
             Foreground="Coral"
             FontWeight="Medium"
+            AcceptsReturn="True"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
             BorderBrush="Silver"
