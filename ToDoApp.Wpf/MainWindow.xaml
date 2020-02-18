@@ -23,7 +23,7 @@
             x:Name="TodoTaskNameText" 
             Grid.Row="0" 
             Grid.Column="0"
-            Margin="2,31,109,2"
+            Margin="2,25,86,2"
             TextAlignment="Center"
             FontFamily="Arial"
             Foreground="Coral"
@@ -34,15 +34,18 @@
             BorderBrush="Silver"
             BorderThickness="2"
             FontSize="20"
-            Text="Text" TextChanged="TodoTaskNameText_TextChanged" />
-        <Menu Margin="0,2,257,55">
-            <MenuItem Header="_File">
-                <MenuItem Header="_Save..." Click="Save_Click"/>
+            Text=""  />
+        <Menu Margin="0,2,207,49" RenderTransformOrigin="0.281,0.448">
+            <MenuItem Header="_File" Height="26" Width="38">
+                <MenuItem Header="_Open..." Click="OnMainFileOpenMenuClicked"/>
                 <Separator />
-                <MenuItem Header="_Load..." Click="Load_Click"/>
+                <MenuItem Header="_Save..." Click="OnMainFileSaveMenuClicked"/>
                 <Separator />
-                <MenuItem Header="_Exit" Click="Exit_Click"/>
+                <MenuItem Header="_Exit" Click="OnMainFileExitMenuClicked"/>
                 <Separator />
+            </MenuItem>
+            <MenuItem x:Name="MainHelpMenu" Header="Help" Height="19" Width="46">
+                <MenuItem x:Name="MainHelpAboutMenu" Header="_About" Click="OnMainHelpAboutMenuClicked"/>
             </MenuItem>
 
         </Menu>
@@ -59,9 +62,21 @@
             BorderBrush="Gold"
             BorderThickness="5"
             FontSize="14"
-            Click="OnTodoTaskButtonClick"
+            Click="OnAddTodoTaskButtonClick"
             Content="Add"/>
-        <ListView 
+        <ListView.ItemTemplate>
+            <DataTemplate DataType="viewModels:TodoTaskViewModel">
+                <Grid>
+                    <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                        <CheckBox x:Name="TodoTaskItemIsCompletedCheck"
+                                  HorizontalAlignment="Left"
+                                  IsChecked=" {Binding is Completed}"  />
+                        <TextBox
+                            x:Name="TodoTaskItemNameText"
+                            HorizontalAlignment="Stretch"
+                            Text="{Binding Description, UodateSource UpdateSourceTrigger=}"
+                    </StackPanel>
+                </Grid>
             x:Name="TodoTaskListView" 
             Grid.Row="1"
             Grid.Column="0" 
@@ -71,31 +86,8 @@
             BorderBrush="Aquamarine"
             FontSize="16"
             Foreground="Blue"
-            ItemsSource="{Binding TodoTaskItems}"
-            BorderThickness="5" Background="#FFCD3A3A"  >
-
-            <ListView.ItemTemplate>
-                <DataTemplate DataType="viewModels:TodoTask">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"  />
-                        </Grid.RowDefinitions>
-                        <StackPanel
-                        Grid.Column="0"
-                        HorizontalAlignment="Stretch"
-                        Orientation="Horizontal">
-                            <CheckBox x:Name="TodoTaskItemIsCompletedCheck"
-                                  HorizontalAlignment="Left"
-                                  IsChecked="{Binding IsCompleted}" />
-
-                            <TextBox 
-                            x:Name="TodoTaskItemNameText" 
-                            Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"  />
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            BorderThickness="5" Background="#FFCD3A3A">
+        </ListView.ItemTemplate>
         <Button
         x:Name="RemoveTodoTaskButton"
         Grid.Row="2"
