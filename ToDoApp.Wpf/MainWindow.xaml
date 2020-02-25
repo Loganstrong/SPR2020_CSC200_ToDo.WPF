@@ -64,30 +64,34 @@
             FontSize="14"
             Click="OnAddTodoTaskButtonClick"
             Content="Add"/>
-        <ListView.ItemTemplate>
-            <DataTemplate DataType="viewModels:TodoTaskViewModel">
-                <Grid>
-                    <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
-                        <CheckBox x:Name="TodoTaskItemIsCompletedCheck"
-                                  HorizontalAlignment="Left"
-                                  IsChecked=" {Binding is Completed}"  />
-                        <TextBox
-                            x:Name="TodoTaskItemNameText"
-                            HorizontalAlignment="Stretch"
-                            Text="{Binding Description, UodateSource UpdateSourceTrigger=}"
-                    </StackPanel>
-                </Grid>
+        <ListView
             x:Name="TodoTaskListView" 
             Grid.Row="1"
             Grid.Column="0" 
             Grid.ColumnSpan="5"
-            VerticalContentAlignment="Center"
-            HorizontalContentAlignment="Center"
+            HorizontalContentAlignment="Left"
             BorderBrush="Aquamarine"
             FontSize="16"
             Foreground="Blue"
             BorderThickness="5" Background="#FFCD3A3A">
-        </ListView.ItemTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="viewModels:TodoTaskViewModel">
+                    <Grid>
+                        <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                            <CheckBox x:Name="TodoTaskItemIsCompletedCheck"
+                                      HorizontalAlignment="Left"                                     
+                                      IsChecked="{Binding IsCompleted}" />
+                            <TextBox
+                                x:Name="TodoTaskItemNameText"
+                                HorizontalAlignment="Stretch"
+                                Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
         <Button
         x:Name="RemoveTodoTaskButton"
         Grid.Row="2"
@@ -102,3 +106,4 @@
     </Grid>
 
 </Window>
+
